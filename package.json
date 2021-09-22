@@ -1,5 +1,16 @@
 {
-  "name": "vue-mapbox",
+  "name": "vite-mapbox",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/vite-mapbox.umd.js",
+  "module": "./dist/vite-mapbox.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/vite-mapbox.es.js",
+      "require": "./dist/vite-mapbox.umd.js"
+    }
+  },
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
@@ -7,6 +18,8 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@types/mapbox-gl": "^2.4.2",
+    "mapbox-gl": "^2.4.1",
     "vue": "^3.2.13"
   },
   "devDependencies": {
