@@ -1,30 +1,35 @@
-import {ref, watch, SetupContext} from 'vue';
-import mapboxgl from 'mapbox-gl';
+import {ref, watch, SetupContext, readonly} from 'vue';
+import mapboxgl, {Map} from 'mapbox-gl';
+import {MapboxEvent} from './enums';
+import { UseMapState } from './types';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiZ2FyeW9icmllbiIsImEiOiJjampzZXppZWYycnJnM3BvMTdlZ3kyMjlsIn0.9cIo5697DOC3BfFuNqoBQg';
 
-export default function useMap(props: any, context: SetupContext) {
+export default function useMap(props: any, context: SetupContext): UseMapState {
   const mapboxRef = ref(null);
   const map = ref<any>(null);
-  const loaded = ref(null);
+  const initialized = ref(false);
 
   function emitEvent(event: any) {
     context.emit(event.type,{
       mapboxEvent: event,
-      component: context
-    } )
+      component: context,
+      map: map.value
+    })
   }
 
 
-  function init() {
-    map.value = new mapboxgl.Map({
-      container: 'map', // container ID
+  function init() { 
+    initialized.value = true;
+
+    map.value = new Map({
       style: 'mapbox://styles/examples/cjgiiz9ck002j2ss5zur1vjji', // style URL
       center: [-74.5, 40], // starting position [lng, lat]
-      zoom: 9 // starting zoom
+      zoom: 9, // starting zoom
+      ...props
     });
 
-    map.value.on('load', emitEvent)
+    map.value.on(MapboxEvent.Load, emitEvent)
   } 
 
   function destroy() {
@@ -39,6 +44,6 @@ export default function useMap(props: any, context: SetupContext) {
   return  {
     mapboxRef,
     map,
-    loaded
+    initialized: readonly(initialized)
   }
 }
