@@ -5,7 +5,6 @@ export default {
     type: String as PropType<string>,
     default: "map",
   },
-
   accessToken: {
     type: String as PropType<string>,
     default: undefined

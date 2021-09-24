@@ -11,6 +11,7 @@ function mapLoaded(event: any) {
 <template>
   <mapbox-map
     @load="mapLoaded"
+    access-token="pk.eyJ1IjoiZ2FyeW9icmllbiIsImEiOiJjampzZXppZWYycnJnM3BvMTdlZ3kyMjlsIn0.9cIo5697DOC3BfFuNqoBQg"
     map-style="mapbox://styles/examples/cjgiiz9ck002j2ss5zur1vjji"
     :center="[-74.5, 40]"
     :zoom="9"

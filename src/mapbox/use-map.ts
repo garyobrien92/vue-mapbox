@@ -1,9 +1,7 @@
 import {ref, watch, SetupContext, readonly, onMounted, onUnmounted} from 'vue';
-import mapboxgl, {Map} from 'mapbox-gl';
+import {Map} from 'mapbox-gl';
 import {MapboxEvent} from './enums';
 import { UseMapState } from './types';
-
-mapboxgl.accessToken = 'pk.eyJ1IjoiZ2FyeW9icmllbiIsImEiOiJjampzZXppZWYycnJnM3BvMTdlZ3kyMjlsIn0.9cIo5697DOC3BfFuNqoBQg';
 
 export default function useMap(props: any, context: SetupContext): UseMapState {
   const map = ref<any>(null);
