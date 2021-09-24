@@ -1,15 +1,20 @@
 <script setup lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import MapboxMap from './mapbox/Map.vue'
+import MapboxMap from "./mapbox/Map.vue";
 
 function mapLoaded(event: any) {
-  console.log(event)
+  console.log(event);
 }
 </script>
 
 <template>
-  <mapbox-map @load="mapLoaded" />
+  <mapbox-map
+    @load="mapLoaded"
+    map-style="mapbox://styles/examples/cjgiiz9ck002j2ss5zur1vjji"
+    :center="[-74.5, 40]"
+    :zoom="9"
+  />
 </template>
 
 <style>

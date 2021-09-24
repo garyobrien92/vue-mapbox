@@ -8,6 +8,7 @@ const mockEvent = {
   type: MapboxEvent.Load
 }
 const mockMap = {
+  remove: jest.fn(),
   on: jest.fn((_, callback: any) => callback(mockEvent))
 };
 
@@ -16,7 +17,8 @@ jest.mock('mapbox-gl', () => ({
 }))
 
 const mockProps = {
-  container: 'map'
+  container: 'map',
+  mapStyle: 'some style url'
 } as any
 const mockContext = {
   emit: jest.fn()
@@ -28,22 +30,18 @@ describe('useMap', () => {
     jest.clearAllMocks()
   });
 
-  it('should return useMap state refs', () => {
-    const {map, initialized, mapboxRef} = useMap(mockProps, mockContext)
+  it('should return useMap state refs',() => {
+
+    const {map, initialized} = useMap(mockProps, mockContext)
     
     expect(isRef(map)).toBeTruthy()
     expect(isRef(initialized)).toBeTruthy()
-    expect(isRef(mapboxRef)).toBeTruthy()
 
     expect(isReadonly(initialized)).toBeTruthy()
-
-    expect(map.value).toBe(null)
-    expect(initialized.value).toBe(false)
-    expect(mapboxRef.value).toBe(null)
   })
 
   it('should update useMap state when used by component', async () => {
-    const wrapper = mount(MapboxMap, {});
+    const wrapper = mount(MapboxMap, {props: mockProps});
 
     await nextTick()
 
@@ -51,5 +49,21 @@ describe('useMap', () => {
 
     expect(initialized).toBe(true)
     expect(map).toEqual(mockMap)
-  })  
+  }) 
+  
+  it('should reset map state if component is destroyed', async () => {
+    const wrapper = mount(MapboxMap,{props: mockProps});
+
+    await nextTick()
+
+    expect(wrapper.vm.initialized).toBe(true)
+    expect(wrapper.vm.map).toEqual(mockMap)
+
+    wrapper.unmount();
+
+    expect(mockMap.remove).toHaveBeenCalled();
+
+    expect(wrapper.vm.map).toBe(null)
+    expect(wrapper.vm.initialized).toBe(false)
+  })
 })

@@ -1,4 +1,4 @@
-import {ref, watch, SetupContext, readonly} from 'vue';
+import {ref, watch, SetupContext, readonly, onMounted, onUnmounted} from 'vue';
 import mapboxgl, {Map} from 'mapbox-gl';
 import {MapboxEvent} from './enums';
 import { UseMapState } from './types';
@@ -6,7 +6,6 @@ import { UseMapState } from './types';
 mapboxgl.accessToken = 'pk.eyJ1IjoiZ2FyeW9icmllbiIsImEiOiJjampzZXppZWYycnJnM3BvMTdlZ3kyMjlsIn0.9cIo5697DOC3BfFuNqoBQg';
 
 export default function useMap(props: any, context: SetupContext): UseMapState {
-  const mapboxRef = ref(null);
   const map = ref<any>(null);
   const initialized = ref(false);
 
@@ -22,27 +21,23 @@ export default function useMap(props: any, context: SetupContext): UseMapState {
   function init() { 
     initialized.value = true;
 
-    map.value = new Map({
-      style: 'mapbox://styles/examples/cjgiiz9ck002j2ss5zur1vjji', // style URL
-      center: [-74.5, 40], // starting position [lng, lat]
-      zoom: 9, // starting zoom
-      ...props
-    });
+    map.value = new Map({ style: props.mapStyle, ...props});
 
     map.value.on(MapboxEvent.Load, emitEvent)
   } 
 
   function destroy() {
     map.value && map.value.remove()
+    map.value = null
+    initialized.value = false
   }
 
-  watch(mapboxRef, (el, _, onCleanup) => {
-    init()
-    onCleanup(destroy)
-  })
+  onMounted(init)
+
+  onUnmounted(destroy)
 
   return  {
-    mapboxRef,
+
     map,
     initialized: readonly(initialized)
   }
