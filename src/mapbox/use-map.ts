@@ -13,12 +13,12 @@ export default function useMap(props: any, context: SetupContext): UseMapState {
       component: context,
       map: map.value
     })
+
+    initialized.value = true;
   }
 
 
   function init() { 
-    initialized.value = true;
-
     map.value = new Map({ style: props.mapStyle, ...props});
 
     map.value.on(MapboxEvent.Load, emitEvent)
@@ -35,7 +35,6 @@ export default function useMap(props: any, context: SetupContext): UseMapState {
   onUnmounted(destroy)
 
   return  {
-
     map,
     initialized: readonly(initialized)
   }

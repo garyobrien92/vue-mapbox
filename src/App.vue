@@ -15,7 +15,9 @@ function mapLoaded(event: any) {
     map-style="mapbox://styles/examples/cjgiiz9ck002j2ss5zur1vjji"
     :center="[-74.5, 40]"
     :zoom="9"
-  />
+  >
+    <div>Map loaded</div>
+  </mapbox-map>
 </template>
 
 <style>
