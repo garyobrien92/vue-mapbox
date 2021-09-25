@@ -5,11 +5,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, SetupContext, PropType } from "vue";
+import { defineComponent, SetupContext } from "vue";
 import useMap from "./use-map";
 import options from "./options";
 
 export default defineComponent({
+  name: "Map",
+
   props: {
     mapboxGl: {
       type: Object,

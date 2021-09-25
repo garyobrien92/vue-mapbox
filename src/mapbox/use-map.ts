@@ -1,11 +1,16 @@
-import {ref, watch, SetupContext, readonly, onMounted, onUnmounted} from 'vue';
+import {ref, computed, SetupContext, readonly, onMounted, onUnmounted, provide, watchEffect} from 'vue';
 import {Map} from 'mapbox-gl';
 import {MapboxEvent} from './enums';
 import { UseMapState } from './types';
 
+export const MapSymbol = Symbol('mapSymbol');
+
+
 export default function useMap(props: any, context: SetupContext): UseMapState {
   const map = ref<any>(null);
   const initialized = ref(false);
+
+
 
   function emitEvent(event: any) {
     context.emit(event.type,{
@@ -33,6 +38,8 @@ export default function useMap(props: any, context: SetupContext): UseMapState {
   onMounted(init)
 
   onUnmounted(destroy)
+
+  provide(MapSymbol, computed(() => map.value))
 
   return  {
     map,
