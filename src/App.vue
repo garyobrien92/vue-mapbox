@@ -2,6 +2,8 @@
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 import MapboxMap from "./mapbox/Map.vue";
+import MapboxPopup from "./mapbox/Popup";
+import PopupContent from "./mapbox/PopupContent.vue";
 
 function mapLoaded(event: any) {
   console.log(event);
@@ -16,7 +18,9 @@ function mapLoaded(event: any) {
     :center="[-74.5, 40]"
     :zoom="9"
   >
-    <div>Map loaded</div>
+    <mapbox-popup :coordinates="[-74.5, 40]">
+      <popup-content :id="1" />
+    </mapbox-popup>
   </mapbox-map>
 </template>
 
