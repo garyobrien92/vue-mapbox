@@ -3,7 +3,6 @@
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 import MapboxMap from "./mapbox/Map.vue";
 import MapboxPopup from "./mapbox/Popup";
-import PopupContent from "./mapbox/PopupContent.vue";
 
 function mapLoaded(event: any) {
   console.log(event);
@@ -19,7 +18,7 @@ function mapLoaded(event: any) {
     :zoom="9"
   >
     <mapbox-popup :coordinates="[-74.5, 40]">
-      <popup-content :id="1" />
+      <span>Inside popup</span>
     </mapbox-popup>
   </mapbox-map>
 </template>

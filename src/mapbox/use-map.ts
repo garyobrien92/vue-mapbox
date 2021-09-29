@@ -10,8 +10,6 @@ export default function useMap(props: any, context: SetupContext): UseMapState {
   const map = ref<any>(null);
   const initialized = ref(false);
 
-
-
   function emitEvent(event: any) {
     context.emit(event.type,{
       mapboxEvent: event,
