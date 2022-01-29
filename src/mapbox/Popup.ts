@@ -1,4 +1,4 @@
-import { h, SetupContext, ref, inject, onMounted, onUnmounted , PropType, resolveComponent} from 'vue';
+import { h, SetupContext, ref, inject, onMounted, onUnmounted , PropType } from 'vue';
 import {MapSymbol} from './use-map';
 import { Popup, Map } from 'mapbox-gl';
 
@@ -17,15 +17,11 @@ export default {
 
     const slots = context.slots.default ? context.slots.default() : [];
 
-    console.log(slots[0], context.slots.default && context.slots.default())
-
     function add() {
       popup.value = new Popup(props)
       .setLngLat(props.coordinates)
       .setDOMContent(slots[0].el as Node)
       .addTo(map.value as Map);
-
-      // console.log(popup.value)
     }
 
     function remove() {
