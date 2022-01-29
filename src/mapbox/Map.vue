@@ -33,4 +33,12 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.map {
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 50%;
+  left: 0;
+  right: 0;
+}
 </style>
